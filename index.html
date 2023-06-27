@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Audio & Video</title>
+</head>
+<body>
+    <audio id="audio" src="./Vivaldi.mp3"></audio>
+
+    <div class="div">
+        <button id="start">Play</button>
+        <span id="playerCTime">0:00</span>
+        <span>/</span>
+        <span id="playerDuration"></span>
+        <input type="range" id="rangeAudio" min="0" value="0">
+        <span>Volume</span>
+        <input style="-webkit-appearance: slider-vertical;" type="range" id="rangeVolume" value="0" max="1" step="0.01">
+
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
