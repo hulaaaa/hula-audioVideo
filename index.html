@@ -3,22 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.6/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="main.css">
     <title>Audio & Video</title>
 </head>
 <body>
-    <audio id="audio" src="./Vivaldi.mp3"></audio>
 
-    <div class="div">
-        <button id="start">Play</button>
-        <span id="playerCTime">0:00</span>
-        <span>/</span>
-        <span id="playerDuration"></span>
-        <input type="range" id="rangeAudio" min="0" value="0">
-        <span>Volume</span>
-        <input style="-webkit-appearance: slider-vertical;" type="range" id="rangeVolume" value="0" max="1" step="0.01">
+    <div class="main">
+        <div class="top">
+            <img src="./img/1.jpeg" alt="img">
+            <div class="song">
+                <audio id="audio" src='./audio/1.mp3'></audio>
+                
+                <div class="headPlayer">
+                    <p style="color: rgba(255, 255, 255, 0.40);
+                        font-size: 16px;
+                        font-weight: 600;">Nirvana
+                    </p>
+                    <h1 style="color: #FFF;
+                        font-size: 32px;
+                        font-weight: 600;">
+                        Something in The Way
+                    </h1>
+                </div>
 
+                <div class="midPlayer">
+                    <input type="range" id="rangeAudio" min="0" value="0">   
+                    <div class="timeDiv">
+                        <span id="playerCTime">0:00</span>
+                        <span id="playerDuration"></span>
+                    </div> 
+                    
+                </div>
+                
+                <div class="bottPlayer">
+                    <button id="start">
+                        <i id="classBtnStart" class="fa-solid fa-play"></i>
+                    </button>
+                    <div class="volume">
+                        <i class="fa-solid fa-volume-low"></i>
+                        <input type="range" id="rangeVolume" value="0" max="1" step="0.01">
+                        <i class="fa-solid fa-volume-high"></i>        
+                    </div>
+                </div>
+                
+        
+                
+            </div>
+        </div>
+        
     </div>
+    
     <script src="main.js"></script>
 </body>
 </html>

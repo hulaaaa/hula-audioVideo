@@ -8,6 +8,9 @@ let startBtn =document.querySelector('#start')
 let playerDuration = document.querySelector('#playerDuration')
 let playerCTime = document.querySelector('#playerCTime')
 audioControl.addEventListener('loadedmetadata',()=>{
+    durationTry = Math.trunc(audioControl.duration);
+        rangeAudio.max = durationTry;
+      
     playerDuration.innerText = toMinutesSec(audioControl.duration)
 })
 audioControl.addEventListener('timeupdate',()=>{
@@ -48,7 +51,7 @@ startBtn.onclick = () => {
         rangeAudio.addEventListener('input',()=>{
             audioControl.currentTime = rangeAudio.value
         })
-        startBtn.innerHTML = `Pause`
+        document.querySelector('#classBtnStart').className = 'fa-solid fa-pause'
         audioControl.play()
         inter = setInterval(()=>{
             rangeAudio.value = audioControl.currentTime
@@ -57,7 +60,7 @@ startBtn.onclick = () => {
 
     }
     else {
-        startBtn.innerHTML = `Play`
+        document.querySelector('#classBtnStart').className = 'fa-solid fa-play'
         audioControl.pause()
         rangeAudio.value = audioControl.currentTime
         clearInterval(inter)
@@ -77,5 +80,4 @@ if(rangeVolume.value == 0) audioControl.volume = 0
 rangeVolume.addEventListener('input',()=>{
     audioControl.volume = rangeVolume.value
 })
-// Video
 

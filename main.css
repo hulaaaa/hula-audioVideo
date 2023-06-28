@@ -1,0 +1,58 @@
+body{
+    height: 100vh;
+    background-image: url(./bgc.png);
+    padding: 50px 0;
+}
+
+.main{
+    margin: 0 auto;
+    padding: 50px;
+    display: flex;
+    width: 700px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: rgba(27, 27, 27, 0.80);
+    box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.30);
+}
+.top > img{
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    background:  lightgray 50% / cover no-repeat;  
+}
+.top{
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    align-self: stretch;
+}
+
+.timeDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.song{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    border: 1px solid black;
+}
+#rangeAudio{
+    width: 100%;
+}
+#start{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 25px;
+}
+
+#classBtnStart{
+    color: black;
+}
