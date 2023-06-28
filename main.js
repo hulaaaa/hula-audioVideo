@@ -111,17 +111,6 @@ likeBtnVolume.addEventListener('click', () => {
   }
 });
 
-const getTracksDuration = () => {
-  arraySong.forEach((song, index) => {
-    const audio = new Audio(song.src);
-    audio.addEventListener('loadedmetadata', () => {
-      const trackDurationElement = document.querySelector(`p.duration[data-src="${arraySong[index].src}"]`);
-      if (trackDurationElement) {
-        trackDurationElement.innerText = toMinutesSec(audio.duration);
-      }
-    });
-  });
-};
 const createParagraphs = () => {
   const container = document.querySelector('.containerSong');
   container.innerHTML = ''; 
@@ -143,12 +132,7 @@ const createParagraphs = () => {
           font-size: 14px;
           font-family: Source Sans 3;
           font-weight: 600;">${obj.artist}</p>
-      </div>
-      <p class="duration" data-src="${obj.src}" style="color: rgba(255, 255, 255, 0.40);
-        font-size: 14px;
-        font-family: Source Sans 3;
-        font-weight: 600;">
-      </p>`;
+      </div>`;
 
     dSong.addEventListener('click', () => {
       playTrack(obj);
@@ -167,7 +151,3 @@ const playTrack = (track) => {
   playerDuration.innerText = toMinutesSec(audioControl.duration);
   playerCTime.innerText = toMinutesSecCT(audioControl.currentTime);
 };
-  
-audioControl.addEventListener('error', (event) => {
-    console.error(event)
-  });
