@@ -1,7 +1,11 @@
 body{
     height: 100vh;
     background-image: url(./bgc.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     padding: 50px 0;
+    font-family: 'Source Sans 3', sans-serif;
+
 }
 
 .main{
@@ -12,7 +16,7 @@ body{
     flex-direction: column;
     align-items: flex-start;
     border-radius: 8px;
-    background: rgba(27, 27, 27, 0.80);
+    background: rgba(27, 27, 27, 0.90);
     box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.30);
 }
 .top > img{
@@ -38,7 +42,6 @@ body{
     flex-direction: column;
     gap: 25px;
     width: 100%;
-    border: 1px solid black;
 }
 #rangeAudio{
     width: 100%;
@@ -47,6 +50,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 180px;
+    
     width: 50px;
     height: 50px;
     background-color: white;
@@ -55,4 +60,96 @@ body{
 
 #classBtnStart{
     color: black;
+}
+.timeDiv{
+    color: rgba(255, 255, 255, 0.40);
+    font-size: 14px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+}
+
+/* RANGE */
+input[type="range"] {
+    -webkit-appearance: none;
+    margin-right: 15px;
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    background-image:linear-gradient(#71C6FF, #71C6FF);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: white;
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+}
+input[type=range]::-webkit-slider-runnable-track  {
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+}
+/* VOLUME */
+.volume{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.volume img{
+    width: 25px;
+    height: 25px;
+    color: white;
+}
+#likeBtnVolume{
+    cursor: pointer;
+}
+
+.bottPlayer{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    gap: 20px;
+}
+#rangeVolume{
+    padding: 0;
+    margin: 0;
+    width: 80px;
+}
+.songPlaylist{
+    display: flex;
+    
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    align-self: stretch;
+}
+.containerSong{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+.dSong{
+    display: flex;
+    width: 600px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.discSong{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    flex: 1 0 0;
 }

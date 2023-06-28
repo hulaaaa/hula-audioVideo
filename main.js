@@ -1,83 +1,156 @@
+let audioControl = document.querySelector('#audio');
+let startBtn = document.querySelector('#start');
+let playerDuration = document.querySelector('#playerDuration');
+let playerCTime = document.querySelector('#playerCTime');
+let rangeAudio = document.querySelector('#rangeAudio');
+let rangeVolume = document.querySelector('#rangeVolume');
+let durationTry;
 
-// TODO: Зробити плеєр ui + fucntional
-let audioControl = document.querySelector('#audio')
-let startBtn =document.querySelector('#start')
+let arraySong = [
+  {
+    title: 'Something in The Way',
+    artist: 'Nirvana',
+    album: 'Nevermind',
+    src: './audio/1.mp3',
+    img: './img/1.jpeg'
+  },
+  {
+    title: 'Stayin\' Alive',
+    artist: 'The Bee Gees',
+    album: 'How You Can Mend A Broken Heart',
+    src: './audio/2.mp3',
+    img: './img/2.jpeg'
+  },
+  {
+    title: 'Blitzkrieg Bop',
+    artist: 'Ramones',
+    album: 'Ramones',
+    src: './audio/3.mp3',
+    img: './img/3.jpeg'
+  }
+];
 
+audioControl.addEventListener('loadedmetadata', () => {
+  durationTry = Math.trunc(audioControl.duration);
+  rangeAudio.max = durationTry;
+  playerDuration.innerText = toMinutesSec(audioControl.duration);
+  createParagraphs();
+});
 
-// ! TIMER
-let playerDuration = document.querySelector('#playerDuration')
-let playerCTime = document.querySelector('#playerCTime')
-audioControl.addEventListener('loadedmetadata',()=>{
-    durationTry = Math.trunc(audioControl.duration);
-        rangeAudio.max = durationTry;
-      
-    playerDuration.innerText = toMinutesSec(audioControl.duration)
-})
-audioControl.addEventListener('timeupdate',()=>{
-    playerCTime.innerText = toMinutesSecCT(audioControl.currentTime)
-})
-let toMinutesSec = sec =>{
-    return `${Math.trunc(sec/60)}:${Math.trunc(sec%60)}`
-}
-let toMinutesSecCT = sec =>{
-    if((sec%60) < 10) return `${Math.trunc(sec/60)}:0${Math.trunc(sec%60)}`
-    else return `${Math.trunc(sec/60)}:${Math.trunc(sec%60)}`
-}
+audioControl.addEventListener('timeupdate', () => {
+  let progress = (audioControl.currentTime / audioControl.duration) * 100;
+  rangeAudio.style.backgroundSize = `${progress}% 100%`;
+  playerCTime.innerText = toMinutesSecCT(audioControl.currentTime);
+});
+
+let toMinutesSec = (sec) => {
+  return `${Math.trunc(sec / 60)}:${Math.trunc(sec % 60)}`;
+};
+
+let toMinutesSecCT = (sec) => {
+  if (sec % 60 < 10) return `${Math.trunc(sec / 60)}:0${Math.trunc(sec % 60)}`;
+  else return `${Math.trunc(sec / 60)}:${Math.trunc(sec % 60)}`;
+};
 
 if (audioControl.duration) {
-    doSomething();
+  doSomething();
 } else {
-    audioControl.onloadedmetadata = doSomething;
+  audioControl.onloadedmetadata = doSomething;
 }
-let durationTry 
+
 function doSomething(event) {
-    playerDuration.innerText = toMinutesSec(audioControl.duration)
-    playerCTime.innerText = toMinutesSecCT(audioControl.currentTime)
+  playerDuration.innerText = toMinutesSec(audioControl.duration);
+  playerCTime.innerText = toMinutesSecCT(audioControl.currentTime);
 }
 
-// ! Range
-let rangeAudio = document.querySelector('#rangeAudio')
-let durationRange = Math.trunc(audioControl.duration)
-rangeAudio.max = durationTry
-console.log(audioControl.duration);
+rangeAudio.addEventListener('input', () => {
+  let value = (rangeAudio.value - rangeAudio.min) / (rangeAudio.max - rangeAudio.min) * 100;
+  rangeAudio.style.backgroundSize = `${value}% 100%`;
+  audioControl.currentTime = rangeAudio.value;
+});
 
+rangeAudio.max = durationTry;
 
-
-
-// ! BTN
+// ! BTN PLAY
 startBtn.onclick = () => {
-    let inter,trigerControl
-    if(audioControl.paused) {
-        rangeAudio.addEventListener('input',()=>{
-            audioControl.currentTime = rangeAudio.value
-        })
-        document.querySelector('#classBtnStart').className = 'fa-solid fa-pause'
-        audioControl.play()
-        inter = setInterval(()=>{
-            rangeAudio.value = audioControl.currentTime
-        },100)
+  let inter;
+  if (audioControl.paused) {
+    document.querySelector('#classBtnStart').className = 'fa-solid fa-pause';
+    audioControl.play();
+    inter = setInterval(() => {
+      rangeAudio.value = audioControl.currentTime;
+    }, 100);
+  } else {
+    document.querySelector('#classBtnStart').className = 'fa-solid fa-play';
+    audioControl.pause();
+    clearInterval(inter);
+  }
+};
 
+// ! Range Volume
+if (rangeVolume.value == 0) audioControl.volume = 0;
+rangeVolume.addEventListener('input', () => {
+  let value = rangeVolume.value * 100;
+  rangeVolume.style.backgroundSize = `${value}% 100%`;
 
-    }
-    else {
-        document.querySelector('#classBtnStart').className = 'fa-solid fa-play'
-        audioControl.pause()
-        rangeAudio.value = audioControl.currentTime
-        clearInterval(inter)
-        rangeAudio.addEventListener('input',()=>{
-            console.log(rangeAudio.value);
-            rangeAudio.value = trigerControl
-            
-        })
-    }
-}
+  audioControl.volume = value / 100;
+});
 
+rangeVolume.style.display = 'none';
+let likeBtnVolume = document.querySelector('#likeBtnVolume');
+let boolVolumeBtn = false;
+likeBtnVolume.addEventListener('click', () => {
+  if (boolVolumeBtn) {
+    rangeVolume.style.display = 'none';
+    boolVolumeBtn = false;
+    document.querySelector('.volume').style.width = 'auto';
+  } else {
+    rangeVolume.style.display = 'block';
+    boolVolumeBtn = true;
+    document.querySelector('.volume').style.width = 'auto';
+  }
+});
 
-// ! SOUND
-let rangeVolume = document.querySelector('#rangeVolume')
+const getTracksDuration = () => {
+  arraySong.forEach((song, index) => {
+    const audio = new Audio(song.src);
+    audio.addEventListener('loadedmetadata', () => {
+      const trackDurationElement = document.querySelector(`p.duration[data-src="${arraySong[index].src}"]`);
+      if (trackDurationElement) {
+        trackDurationElement.innerText = toMinutesSec(audio.duration);
+      }
+    });
+  });
+};
 
-if(rangeVolume.value == 0) audioControl.volume = 0
-rangeVolume.addEventListener('input',()=>{
-    audioControl.volume = rangeVolume.value
-})
+const createParagraphs = () => {
+  for (let obj of arraySong) {
+    var dSong = document.createElement('div');
+    dSong.className = 'dSong'
+    dSong.innerHTML = `
+    <img src="${obj.img}" alt="img" style="width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: lightgray 50% / cover no-repeat;">
+    <div class="discSong">
+        <h1 style="color: #FFF;
+        font-size: 16px;
+        font-family: Source Sans 3;
+        font-weight: 600;">${obj.title}</h1>
+        <p style="color: rgba(255, 255, 255, 0.40);
+        font-size: 14px;
+        font-family: Source Sans 3;
+        font-weight: 600;">${obj.artist}</p>
+    </div>
+    <p class="duration" data-src="${obj.src}" style="color: rgba(255, 255, 255, 0.40);
+        font-size: 14px;
+        font-family: Source Sans 3;
+        font-weight: 600;">
+    </p>`;
+    document.querySelector('.containerSong').appendChild(dSong);
+  }
+  
 
+};
+getTracksDuration();
