@@ -15,18 +15,18 @@ let arraySong = [
     img: './img/1.jpeg'
   },
   {
-    title: 'Stayin\' Alive',
-    artist: 'The Bee Gees',
-    album: 'How You Can Mend A Broken Heart',
-    src: './audio/2.mp3',
-    img: './img/2.jpeg'
-  },
-  {
     title: 'Blitzkrieg Bop',
     artist: 'Ramones',
     album: 'Ramones',
-    src: './audio/3.mp3',
+    src: './audio/2.mp3',
     img: './img/3.jpeg'
+  },
+  {
+    title: 'Stayin\' Alive',
+    artist: 'The Bee Gees',
+    album: 'How You Can Mend A Broken Heart',
+    src: './audio/3.mp3',
+    img: './img/2.jpeg'
   }
 ];
 
@@ -122,35 +122,52 @@ const getTracksDuration = () => {
     });
   });
 };
-
 const createParagraphs = () => {
+  const container = document.querySelector('.containerSong');
+  container.innerHTML = ''; 
   for (let obj of arraySong) {
-    var dSong = document.createElement('div');
-    dSong.className = 'dSong'
+    let dSong = document.createElement('div');
+    dSong.className = 'dSong';
     dSong.innerHTML = `
-    <img src="${obj.img}" alt="img" style="width: 50px;
-    height: 50px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: lightgray 50% / cover no-repeat;">
-    <div class="discSong">
+      <img src="${obj.img}" alt="img" style="width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+        border-radius: 8px;
+        background: lightgray 50% / cover no-repeat;">
+      <div class="discSong">
         <h1 style="color: #FFF;
-        font-size: 16px;
-        font-family: Source Sans 3;
-        font-weight: 600;">${obj.title}</h1>
+          font-size: 16px;
+          font-family: Source Sans 3;
+          font-weight: 600;">${obj.title}</h1>
         <p style="color: rgba(255, 255, 255, 0.40);
-        font-size: 14px;
-        font-family: Source Sans 3;
-        font-weight: 600;">${obj.artist}</p>
-    </div>
-    <p class="duration" data-src="${obj.src}" style="color: rgba(255, 255, 255, 0.40);
+          font-size: 14px;
+          font-family: Source Sans 3;
+          font-weight: 600;">${obj.artist}</p>
+      </div>
+      <p class="duration" data-src="${obj.src}" style="color: rgba(255, 255, 255, 0.40);
         font-size: 14px;
         font-family: Source Sans 3;
         font-weight: 600;">
-    </p>`;
-    document.querySelector('.containerSong').appendChild(dSong);
-  }
-  
+      </p>`;
 
+    dSong.addEventListener('click', () => {
+      playTrack(obj);
+      document.querySelector('#imgSong').src = `${obj.img}`
+      document.querySelector('#titleSong').innerHTML = `${obj.title}`
+      document.querySelector('#artistSong').innerHTML = `${obj.artist}  &#x2022;  ${obj.album}`
+    });
+
+    container.appendChild(dSong);
+  }
 };
-getTracksDuration();
+  
+const playTrack = (track) => {
+  audioControl.src = track.src;
+  audioControl.play();
+  playerDuration.innerText = toMinutesSec(audioControl.duration);
+  playerCTime.innerText = toMinutesSecCT(audioControl.currentTime);
+};
+  
+audioControl.addEventListener('error', (event) => {
+    console.error(event)
+  });
